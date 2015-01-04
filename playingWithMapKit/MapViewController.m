@@ -26,11 +26,11 @@
     NSLog(@"%d", status);
     
     if (status == kCLAuthorizationStatusRestricted || status == kCLAuthorizationStatusDenied) {
-        UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"Permission to Access Location Not Received" message:@"Please Turn On Location Sharing" preferredStyle:UIAlertControllerStyleAlert];
+        UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"Permission to Access Location Not Received" message:@"Please Turn On Location Sharing in Settings" preferredStyle:UIAlertControllerStyleAlert];
         UIAlertAction *defaultAction = [UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
         }];
         [alert addAction:defaultAction];
-        
+
         [self presentViewController:alert animated:YES completion:nil];
     } else {
         self.locationManager = [[CLLocationManager alloc] init];
@@ -48,8 +48,13 @@
             }
         }
     }
+}
+
+- (void) viewDidAppear:(BOOL)animated
+{
+    [super viewDidAppear:animated];
     
-    
+    NSLog(@"viewdidapppear");
     
 }
 
@@ -74,8 +79,20 @@
 }
 
 - (IBAction)zoomIn:(id)sender {
+    MKUserLocation *userLocation = self.mapView.userLocation;
+    MKCoordinateRegion region = MKCoordinateRegionMakeWithDistance(userLocation.location.coordinate, 20000, 20000);
+    [self.mapView setRegion:region animated:NO];
+    NSLog(@"%f %f %f %f", region.center.latitude, region.center.longitude, region.span.latitudeDelta, region.span.longitudeDelta);
+    NSLog(@"%f %f %f %f", self.mapView.region.center.latitude, self.mapView.region.center.longitude, self.mapView.region.span.latitudeDelta, self.mapView.region.span.longitudeDelta);
 }
 
 - (IBAction)changeMapType:(id)sender {
+    if (self.mapView.mapType == MKMapTypeStandard) {
+        self.mapView.mapType = MKMapTypeHybrid;
+    }else {
+        self.mapView.mapType = MKMapTypeStandard;
+    }
+    
+    
 }
 @end
