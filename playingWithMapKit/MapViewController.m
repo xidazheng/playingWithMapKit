@@ -37,10 +37,13 @@
         self.locationManager.delegate = self;
         
         if (status == kCLAuthorizationStatusNotDetermined) {
+            NSLog(@"requestWhenInUseAuthorization reached");
             [self.locationManager requestWhenInUseAuthorization];
+//            [self.locationManager startUpdatingLocation];
         } else if (status == kCLAuthorizationStatusAuthorizedAlways || status == kCLAuthorizationStatusAuthorizedWhenInUse) {
             
             if ([CLLocationManager locationServicesEnabled]) {
+//                NSLog(@"showsUserLocation reached");
                 self.mapView.showsUserLocation = YES;
             }
         }
@@ -50,6 +53,8 @@
     
 }
 
+//need a handler for status messages because it comes up in two places
+
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
@@ -57,7 +62,15 @@
 
 - (void)locationManager:(CLLocationManager *)manager didChangeAuthorizationStatus:(CLAuthorizationStatus)status
 {
-    
+    NSLog(@"didChangeAuthorizationStatus %d", status);
+    if (status == kCLAuthorizationStatusAuthorizedAlways || status == kCLAuthorizationStatusAuthorizedWhenInUse) {
+        
+        if ([CLLocationManager locationServicesEnabled]) {
+            
+            self.mapView.showsUserLocation = YES;
+        }
+    }
+
 }
 
 - (IBAction)zoomIn:(id)sender {
