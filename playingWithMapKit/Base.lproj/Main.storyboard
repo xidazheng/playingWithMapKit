@@ -102,6 +102,9 @@
                                         </label>
                                     </subviews>
                                 </tableViewCellContentView>
+                                <connections>
+                                    <segue destination="QM1-5t-YIJ" kind="show" id="Ur2-EH-C2X"/>
+                                </connections>
                             </tableViewCell>
                         </prototypes>
                         <connections>
@@ -113,6 +116,38 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="HAZ-u9-AG6" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="1785" y="345"/>
+        </scene>
+        <!--Route View Controller-->
+        <scene sceneID="8DP-Mv-DDz">
+            <objects>
+                <viewController id="QM1-5t-YIJ" customClass="RouteViewController" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="k4C-T4-idD"/>
+                        <viewControllerLayoutGuide type="bottom" id="nvk-0C-l76"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="Bgp-dG-eM0">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <mapView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" mapType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="gMf-MD-OFE">
+                                <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                            </mapView>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="gMf-MD-OFE" firstAttribute="bottom" secondItem="nvk-0C-l76" secondAttribute="top" id="Hhz-1N-eMe"/>
+                            <constraint firstItem="gMf-MD-OFE" firstAttribute="top" secondItem="Bgp-dG-eM0" secondAttribute="top" id="bwS-7b-fX4"/>
+                            <constraint firstItem="gMf-MD-OFE" firstAttribute="leading" secondItem="Bgp-dG-eM0" secondAttribute="leading" id="oAB-6r-Ygf"/>
+                            <constraint firstAttribute="trailing" secondItem="gMf-MD-OFE" secondAttribute="trailing" id="t9t-Jy-aPu"/>
+                        </constraints>
+                    </view>
+                    <connections>
+                        <outlet property="routeMap" destination="gMf-MD-OFE" id="73h-4i-Gcy"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="aVJ-Kv-1uv" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="2513" y="345"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="WQ2-wg-Xvj">

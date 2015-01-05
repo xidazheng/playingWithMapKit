@@ -53,9 +53,9 @@
         }
     }
     
+
     
     self.mapView.delegate = self;
-    
     
 }
 
@@ -80,7 +80,7 @@
     if (status == kCLAuthorizationStatusAuthorizedAlways || status == kCLAuthorizationStatusAuthorizedWhenInUse) {
         
         if ([CLLocationManager locationServicesEnabled]) {
-            [self.locationManager startUpdatingLocation];
+//            [self.locationManager startUpdatingLocation];
             self.mapView.showsUserLocation = YES;
         }
     }
@@ -102,6 +102,8 @@
     MKUserLocation *userLocation = self.mapView.userLocation;
     MKCoordinateRegion region = MKCoordinateRegionMakeWithDistance(userLocation.location.coordinate, 1000, 1000);
     [self.mapView setRegion:region animated:NO];
+    
+
     NSLog(@"%f %f %f %f", region.center.latitude, region.center.longitude, region.span.latitudeDelta, region.span.longitudeDelta);
     NSLog(@"%f %f %f %f", self.mapView.region.center.latitude, self.mapView.region.center.longitude, self.mapView.region.span.latitudeDelta, self.mapView.region.span.longitudeDelta);
 }
@@ -130,6 +132,8 @@
     MKLocalSearch *search = [[MKLocalSearch alloc] initWithRequest:request];
     
     [search startWithCompletionHandler:^(MKLocalSearchResponse *response, NSError *error) {
+        MKPointAnnotation *lastAnnotation;
+        
         if (response.mapItems.count == 0) {
             NSLog(@"No Matches");
         }else
@@ -141,8 +145,12 @@
                 annotation.coordinate = item.placemark.coordinate;
                 annotation.title = item.name;
                 [self.mapView addAnnotation:annotation];
+                
+                lastAnnotation = annotation;
             }
         }
+        
+        [self.mapView selectAnnotation:lastAnnotation animated:YES];
     }];
     
 }

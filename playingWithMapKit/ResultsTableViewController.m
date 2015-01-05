@@ -7,6 +7,7 @@
 //
 
 #import "ResultsTableViewController.h"
+#import "RouteViewController.h"
 
 @interface ResultsTableViewController ()
 
@@ -90,14 +91,17 @@
 }
 */
 
-/*
+
 #pragma mark - Navigation
 
 // In a storyboard-based application, you will often want to do a little preparation before navigation
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
     // Get the new view controller using [segue destinationViewController].
     // Pass the selected object to the new view controller.
+    RouteViewController *routeVC = [segue destinationViewController];
+    
+    routeVC.destination = self.mapItems[[self.tableView indexPathForSelectedRow].row];
 }
-*/
+
 
 @end
