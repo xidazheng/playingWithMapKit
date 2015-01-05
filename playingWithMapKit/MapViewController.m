@@ -9,10 +9,13 @@
 #import "MapViewController.h"
 
 @interface MapViewController ()
-@property (weak, nonatomic) IBOutlet MKMapView *mapView;
 @property (strong, nonatomic) CLLocationManager *locationManager;
+@property (weak, nonatomic) IBOutlet MKMapView *mapView;
+@property (weak, nonatomic) IBOutlet UITextField *searchText;
+@property (strong, nonatomic) NSMutableArray *matchingItems;
 - (IBAction)zoomIn:(id)sender;
 - (IBAction)changeMapType:(id)sender;
+- (IBAction)textFieldReturn:(id)sender;
 
 @end
 
@@ -51,6 +54,8 @@
     
     
     self.mapView.delegate = self;
+    
+    
 }
 
 - (void) viewDidAppear:(BOOL)animated
@@ -83,12 +88,12 @@
 
 - (void)locationManager:(CLLocationManager *)manager didUpdateLocations:(NSArray *)locations
 {
-    NSLog(@"locationManager didUpdateLocations %@", locations[0]);
+//    NSLog(@"locationManager didUpdateLocations %@", locations[0]);
 }
 
 - (void)mapView:(MKMapView *)mapView didUpdateUserLocation:(MKUserLocation *)userLocation
 {
-    NSLog(@"mapView didUpdateUserLocation %@", userLocation.location);
+//    NSLog(@"mapView didUpdateUserLocation %@", userLocation.location);
     self.mapView.centerCoordinate = userLocation.location.coordinate;
 }
 
@@ -106,6 +111,39 @@
     }else {
         self.mapView.mapType = MKMapTypeStandard;
     }
+}
+
+- (IBAction)textFieldReturn:(id)sender {
+    [sender resignFirstResponder];
+    [self.mapView removeAnnotations:[self.mapView annotations]];
+    [self performSearch];
+}
+
+- (void) performSearch {
+    MKLocalSearchRequest *request = [[MKLocalSearchRequest alloc] init];
+    request.naturalLanguageQuery = self.searchText.text;
+    request.region = self.mapView.region;
+    
+    self.matchingItems = [[NSMutableArray alloc] init];
+    
+    MKLocalSearch *search = [[MKLocalSearch alloc] initWithRequest:request];
+    
+    [search startWithCompletionHandler:^(MKLocalSearchResponse *response, NSError *error) {
+        if (response.mapItems.count == 0) {
+            NSLog(@"No Matches");
+        }else
+        {
+            for (MKMapItem *item in response.mapItems)
+            {
+                [self.matchingItems addObject:item];
+                MKPointAnnotation *annotation = [[MKPointAnnotation alloc] init];
+                annotation.coordinate = item.placemark.coordinate;
+                annotation.title = item.name;
+                [self.mapView addAnnotation:annotation];
+            }
+        }
+    }];
+    
 }
 
 @end

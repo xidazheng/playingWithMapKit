@@ -2,6 +2,7 @@
 <document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="6254" systemVersion="14B25" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="FQc-Iq-A5f">
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6247"/>
+        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
     </dependencies>
     <scenes>
         <!--Map View Controller-->
@@ -32,28 +33,40 @@
                                 </items>
                             </toolbar>
                             <mapView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" mapType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="ozj-FZ-Nfv">
-                                <rect key="frame" x="0.0" y="64" width="600" height="492"/>
+                                <rect key="frame" x="0.0" y="110" width="600" height="446"/>
                             </mapView>
+                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Local Search" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="hsu-Lx-j8i">
+                                <rect key="frame" x="16" y="72" width="568" height="30"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits" returnKeyType="search"/>
+                                <connections>
+                                    <action selector="textFieldReturn:" destination="vXZ-lx-hvc" eventType="editingDidEndOnExit" id="Xs9-5o-o9h"/>
+                                </connections>
+                            </textField>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                         <constraints>
-                            <constraint firstItem="ozj-FZ-Nfv" firstAttribute="top" secondItem="jyV-Pf-zRb" secondAttribute="bottom" id="Twl-nv-SqO"/>
-                            <constraint firstItem="CqV-B5-OzB" firstAttribute="leading" secondItem="ozj-FZ-Nfv" secondAttribute="leading" id="ZBh-xB-jda"/>
-                            <constraint firstItem="CqV-B5-OzB" firstAttribute="top" secondItem="ozj-FZ-Nfv" secondAttribute="bottom" id="anM-DX-b42"/>
-                            <constraint firstItem="CqV-B5-OzB" firstAttribute="bottom" secondItem="2fi-mo-0CV" secondAttribute="top" id="cpm-gx-zrt"/>
-                            <constraint firstItem="ozj-FZ-Nfv" firstAttribute="trailing" secondItem="CqV-B5-OzB" secondAttribute="trailing" id="kCa-JT-4Pe"/>
-                            <constraint firstItem="CqV-B5-OzB" firstAttribute="leading" secondItem="kh9-bI-dsS" secondAttribute="leading" id="ob5-2y-Uod"/>
-                            <constraint firstAttribute="trailing" secondItem="CqV-B5-OzB" secondAttribute="trailing" id="ynC-nu-HO3"/>
+                            <constraint firstItem="hsu-Lx-j8i" firstAttribute="leading" secondItem="kh9-bI-dsS" secondAttribute="leadingMargin" id="BNo-rP-uDq"/>
+                            <constraint firstItem="ozj-FZ-Nfv" firstAttribute="top" secondItem="hsu-Lx-j8i" secondAttribute="bottom" constant="8" symbolic="YES" id="Qkx-mI-Cl4"/>
+                            <constraint firstAttribute="trailing" secondItem="ozj-FZ-Nfv" secondAttribute="trailing" id="Usp-0n-Las"/>
+                            <constraint firstItem="CqV-B5-OzB" firstAttribute="top" secondItem="ozj-FZ-Nfv" secondAttribute="bottom" id="Yub-lj-sT1"/>
+                            <constraint firstItem="CqV-B5-OzB" firstAttribute="leading" secondItem="kh9-bI-dsS" secondAttribute="leading" id="a8r-h6-wwR"/>
+                            <constraint firstItem="hsu-Lx-j8i" firstAttribute="top" secondItem="jyV-Pf-zRb" secondAttribute="bottom" constant="8" symbolic="YES" id="bz7-Zw-tEm"/>
+                            <constraint firstItem="ozj-FZ-Nfv" firstAttribute="trailing" secondItem="CqV-B5-OzB" secondAttribute="trailing" id="e9J-lq-Lvn"/>
+                            <constraint firstItem="CqV-B5-OzB" firstAttribute="bottom" secondItem="2fi-mo-0CV" secondAttribute="top" id="hB2-AN-FZS"/>
+                            <constraint firstItem="ozj-FZ-Nfv" firstAttribute="centerX" secondItem="hsu-Lx-j8i" secondAttribute="centerX" id="kju-aX-6AD"/>
+                            <constraint firstItem="ozj-FZ-Nfv" firstAttribute="leading" secondItem="CqV-B5-OzB" secondAttribute="leading" id="tY4-9q-YoE"/>
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="DC3-lk-Gb9"/>
                     <connections>
                         <outlet property="mapView" destination="ozj-FZ-Nfv" id="aMN-u3-XWK"/>
+                        <outlet property="searchText" destination="hsu-Lx-j8i" id="heo-re-QBR"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="x5A-6p-PRh" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1092" y="347"/>
+            <point key="canvasLocation" x="1101" y="346"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="WQ2-wg-Xvj">
