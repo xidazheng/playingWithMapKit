@@ -7,6 +7,7 @@
 //
 
 #import "MapViewController.h"
+#import "ResultsTableViewController.h"
 
 @interface MapViewController ()
 @property (strong, nonatomic) CLLocationManager *locationManager;
@@ -144,6 +145,12 @@
         }
     }];
     
+}
+
+- (void) prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
+{
+    ResultsTableViewController *destination = [segue destinationViewController];
+    destination.mapItems = self.matchingItems;
 }
 
 @end

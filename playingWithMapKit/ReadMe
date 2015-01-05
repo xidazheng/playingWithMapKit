@@ -2,4 +2,7 @@
 
 The objective of this tutorial is to develop an iOS application designed to display a map with a marker indicating the user’s current location. Buttons located in a navigation bar are provided to allow the user to zoom in on the current location and to toggle between map and satellite views. Through the implementation of the MKMapViewDelegate protocol the map will update as the user’s location changes so that the current location marker is always the center point of the displayed map region.
 
-2. Follow another tutorial. http://www.techotopia.com/index.php/Working_with_MapKit_Local_Search_in_iOS_7
+2. Follow a local search and annotations tutorial. http://www.techotopia.com/index.php/Working_with_MapKit_Local_Search_in_iOS_7
+
+3. Follow a mkdirections tutorial. http://www.techotopia.com/index.php/Using_MKDirections_to_get_iOS_7_Map_Directions_and_Routes
+
