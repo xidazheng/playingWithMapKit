@@ -48,6 +48,9 @@
             }
         }
     }
+    
+    
+    self.mapView.delegate = self;
 }
 
 - (void) viewDidAppear:(BOOL)animated
@@ -71,16 +74,27 @@
     if (status == kCLAuthorizationStatusAuthorizedAlways || status == kCLAuthorizationStatusAuthorizedWhenInUse) {
         
         if ([CLLocationManager locationServicesEnabled]) {
-            
+            [self.locationManager startUpdatingLocation];
             self.mapView.showsUserLocation = YES;
         }
     }
 
 }
 
+- (void)locationManager:(CLLocationManager *)manager didUpdateLocations:(NSArray *)locations
+{
+    NSLog(@"locationManager didUpdateLocations %@", locations[0]);
+}
+
+- (void)mapView:(MKMapView *)mapView didUpdateUserLocation:(MKUserLocation *)userLocation
+{
+    NSLog(@"mapView didUpdateUserLocation %@", userLocation.location);
+    self.mapView.centerCoordinate = userLocation.location.coordinate;
+}
+
 - (IBAction)zoomIn:(id)sender {
     MKUserLocation *userLocation = self.mapView.userLocation;
-    MKCoordinateRegion region = MKCoordinateRegionMakeWithDistance(userLocation.location.coordinate, 20000, 20000);
+    MKCoordinateRegion region = MKCoordinateRegionMakeWithDistance(userLocation.location.coordinate, 1000, 1000);
     [self.mapView setRegion:region animated:NO];
     NSLog(@"%f %f %f %f", region.center.latitude, region.center.longitude, region.span.latitudeDelta, region.span.longitudeDelta);
     NSLog(@"%f %f %f %f", self.mapView.region.center.latitude, self.mapView.region.center.longitude, self.mapView.region.span.latitudeDelta, self.mapView.region.span.longitudeDelta);
@@ -92,7 +106,6 @@
     }else {
         self.mapView.mapType = MKMapTypeStandard;
     }
-    
-    
 }
+
 @end
