@@ -17,7 +17,6 @@
 - (IBAction)zoomIn:(id)sender;
 - (IBAction)changeMapType:(id)sender;
 - (IBAction)textFieldReturn:(id)sender;
-- (IBAction)checkInTapped:(id)sender;
 
 @end
 
@@ -132,7 +131,19 @@
     
     
     if ([annotation isKindOfClass:[MKUserLocation class]]) {
-        [(MKUserLocation *) annotation setTitle:@"Hello there"];
+        CLGeocoder *geocoder = [[CLGeocoder alloc] init];
+        
+        [geocoder reverseGeocodeLocation:((MKUserLocation *) annotation).location completionHandler:^(NSArray *placemarks, NSError *error) {
+            if ([placemarks count]>0) {
+                CLPlacemark *placemark = placemarks[0]; //Only returns one
+                NSArray *formattedAddressLines = placemark.addressDictionary[@"FormattedAddressLines"];
+                NSString *street = formattedAddressLines[0];
+                NSString *cityState = [formattedAddressLines[1] substringToIndex:[formattedAddressLines[1] length] - 11];
+                
+                [(MKUserLocation *) annotation setTitle:[NSString stringWithFormat:@"%@ %@", street, cityState]];
+            }
+        }];
+        
     }
     
     return nil;
