@@ -6,3 +6,16 @@ The objective of this tutorial is to develop an iOS application designed to disp
 
 3. Follow a mkdirections tutorial. http://www.techotopia.com/index.php/Using_MKDirections_to_get_iOS_7_Map_Directions_and_Routes
 
+4. Now, how do I look up locations on the map? Reverse Geocoding.
+
+Story: Find the address of the current location
+
+In order to know where I am
+As a person using the app
+I want to see the address of my current location.
+
+Scenario 1: I want to see the address near my current location
+Given that the map shows my location
+When I tap on the Checkin button on the toolbar
+Then a modal should display my current address
+

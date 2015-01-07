@@ -17,6 +17,7 @@
 - (IBAction)zoomIn:(id)sender;
 - (IBAction)changeMapType:(id)sender;
 - (IBAction)textFieldReturn:(id)sender;
+- (IBAction)checkInTapped:(id)sender;
 
 @end
 
@@ -43,11 +44,10 @@
         if (status == kCLAuthorizationStatusNotDetermined) {
             NSLog(@"requestWhenInUseAuthorization reached");
             [self.locationManager requestWhenInUseAuthorization];
-//            [self.locationManager startUpdatingLocation];
         } else if (status == kCLAuthorizationStatusAuthorizedAlways || status == kCLAuthorizationStatusAuthorizedWhenInUse) {
             
             if ([CLLocationManager locationServicesEnabled]) {
-//                NSLog(@"showsUserLocation reached");
+                NSLog(@"showsUserLocation reached");
                 self.mapView.showsUserLocation = YES;
             }
         }
@@ -80,7 +80,6 @@
     if (status == kCLAuthorizationStatusAuthorizedAlways || status == kCLAuthorizationStatusAuthorizedWhenInUse) {
         
         if ([CLLocationManager locationServicesEnabled]) {
-//            [self.locationManager startUpdatingLocation];
             self.mapView.showsUserLocation = YES;
         }
     }
@@ -120,6 +119,10 @@
     [sender resignFirstResponder];
     [self.mapView removeAnnotations:[self.mapView annotations]];
     [self performSearch];
+}
+
+- (IBAction)checkInTapped:(id)sender {
+    
 }
 
 - (void) performSearch {

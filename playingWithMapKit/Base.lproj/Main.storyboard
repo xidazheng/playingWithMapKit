@@ -30,6 +30,11 @@
                                             <action selector="changeMapType:" destination="vXZ-lx-hvc" id="9hA-dU-caS"/>
                                         </connections>
                                     </barButtonItem>
+                                    <barButtonItem title="Check in" id="xUN-xb-l6v">
+                                        <connections>
+                                            <action selector="checkInTapped:" destination="vXZ-lx-hvc" id="4iD-vi-NRv"/>
+                                        </connections>
+                                    </barButtonItem>
                                 </items>
                             </toolbar>
                             <mapView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" mapType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="ozj-FZ-Nfv">
