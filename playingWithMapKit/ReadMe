@@ -16,6 +16,6 @@ I want to see the address of my current location.
 
 Scenario 1: I want to see the address near my current location
 Given that the map shows my location
-When I tap on the Checkin button on the toolbar
-Then a modal should display my current address
+When I tap on the blue dot
+Then an annotation should show my current address
 

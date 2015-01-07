@@ -121,8 +121,21 @@
     [self performSearch];
 }
 
-- (IBAction)checkInTapped:(id)sender {
+- (void) mapView:(MKMapView *)mapView didAddAnnotationViews:(NSArray *)views
+{
+    NSLog(@"Did addAnnotationViews %@", views);
+}
+
+- (MKAnnotationView *) mapView:(MKMapView *)mapView viewForAnnotation:(id<MKAnnotation>)annotation
+{
+    NSLog(@"viewForAnnotation %@", annotation);
     
+    
+    if ([annotation isKindOfClass:[MKUserLocation class]]) {
+        [(MKUserLocation *) annotation setTitle:@"Hello there"];
+    }
+    
+    return nil;
 }
 
 - (void) performSearch {
