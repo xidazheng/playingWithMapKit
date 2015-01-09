@@ -27,7 +27,7 @@
     
     if (selected)
     {
-        UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 150, 100)];
+        UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 200, 80)];
         label.backgroundColor = [UIColor whiteColor];
         label.layer.cornerRadius = 10;
         label.clipsToBounds = YES;

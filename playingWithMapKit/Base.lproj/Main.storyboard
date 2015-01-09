@@ -25,6 +25,7 @@
                                             <action selector="changeMapType:" destination="vXZ-lx-hvc" id="9hA-dU-caS"/>
                                         </connections>
                                     </barButtonItem>
+                                    <barButtonItem style="plain" systemItem="flexibleSpace" id="pvp-QN-wLv"/>
                                     <barButtonItem title="Zoom" id="goE-4N-8gO">
                                         <connections>
                                             <action selector="zoomIn:" destination="vXZ-lx-hvc" id="NU6-5J-f2z"/>
@@ -35,7 +36,7 @@
                             <mapView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" mapType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="ozj-FZ-Nfv">
                                 <rect key="frame" x="0.0" y="110" width="600" height="446"/>
                             </mapView>
-                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Local Search" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="hsu-Lx-j8i">
+                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Local Search" minimumFontSize="17" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="hsu-Lx-j8i">
                                 <rect key="frame" x="16" y="72" width="568" height="30"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits" returnKeyType="search"/>
@@ -117,7 +118,7 @@
             </objects>
             <point key="canvasLocation" x="1785" y="345"/>
         </scene>
-        <!--Route View Controller-->
+        <!--Walking Route-->
         <scene sceneID="8DP-Mv-DDz">
             <objects>
                 <viewController id="QM1-5t-YIJ" customClass="RouteViewController" sceneMemberID="viewController">
@@ -141,6 +142,13 @@
                             <constraint firstAttribute="trailing" secondItem="gMf-MD-OFE" secondAttribute="trailing" id="t9t-Jy-aPu"/>
                         </constraints>
                     </view>
+                    <navigationItem key="navigationItem" title="Walking Route" id="ogX-Nw-ebj">
+                        <barButtonItem key="rightBarButtonItem" title="Directions" id="GeP-vl-fKI">
+                            <connections>
+                                <segue destination="huE-S7-jKg" kind="presentation" id="48D-Xc-tx2"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
                     <connections>
                         <outlet property="routeMap" destination="gMf-MD-OFE" id="73h-4i-Gcy"/>
                     </connections>
@@ -148,6 +156,39 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="aVJ-Kv-1uv" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="2513" y="345"/>
+        </scene>
+        <!--Walking Directions-->
+        <scene sceneID="RQw-oy-KPM">
+            <objects>
+                <tableViewController id="3JP-ka-nu9" customClass="DirectionsTableViewController" sceneMemberID="viewController">
+                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" id="MIj-2I-shx">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <prototypes>
+                            <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="directionCell" id="u1o-5X-e1g">
+                                <autoresizingMask key="autoresizingMask"/>
+                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="u1o-5X-e1g" id="w9A-FA-zk8">
+                                    <autoresizingMask key="autoresizingMask"/>
+                                </tableViewCellContentView>
+                            </tableViewCell>
+                        </prototypes>
+                        <connections>
+                            <outlet property="dataSource" destination="3JP-ka-nu9" id="tvE-8w-Kfs"/>
+                            <outlet property="delegate" destination="3JP-ka-nu9" id="QkA-eK-Egg"/>
+                        </connections>
+                    </tableView>
+                    <navigationItem key="navigationItem" title="Walking Directions" id="RQM-As-re5">
+                        <barButtonItem key="rightBarButtonItem" systemItem="done" id="4Vl-jc-lCm">
+                            <connections>
+                                <action selector="doneTapped:" destination="3JP-ka-nu9" id="uA5-qe-Tgz"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
+                </tableViewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="4cc-3T-ngi" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="4008" y="345"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="WQ2-wg-Xvj">
@@ -166,6 +207,24 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="mDd-xu-yn1" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="319" y="1008"/>
+        </scene>
+        <!--Navigation Controller-->
+        <scene sceneID="Esa-vJ-zAd">
+            <objects>
+                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="huE-S7-jKg" sceneMemberID="viewController">
+                    <toolbarItems/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="wIC-jp-Ia3">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <nil name="viewControllers"/>
+                    <connections>
+                        <segue destination="3JP-ka-nu9" kind="relationship" relationship="rootViewController" id="Yag-R0-0zu"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="naw-fA-vob" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="3196" y="345"/>
         </scene>
     </scenes>
 </document>

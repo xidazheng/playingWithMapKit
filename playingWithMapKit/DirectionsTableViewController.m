@@ -1,19 +1,19 @@
 //
-//  ResultsTableViewController.m
+//  DirectionsTableViewController.m
 //  playingWithMapKit
 //
-//  Created by Xida Zheng on 1/5/15.
+//  Created by Xida Zheng on 1/9/15.
 //  Copyright (c) 2015 xidazheng. All rights reserved.
 //
 
-#import "ResultsTableViewController.h"
-#import "RouteViewController.h"
+#import "DirectionsTableViewController.h"
 
-@interface ResultsTableViewController ()
+@interface DirectionsTableViewController ()
+- (IBAction)doneTapped:(id)sender;
 
 @end
 
-@implementation ResultsTableViewController
+@implementation DirectionsTableViewController
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -39,23 +39,28 @@
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     // Return the number of rows in the section.
-    return [self.mapItems count];
+    return [self.directions count];
 }
 
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"resultCell" forIndexPath:indexPath];
+    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"directionCell" forIndexPath:indexPath];
     
     // Configure the cell...
-    MKMapItem *item = self.mapItems[indexPath.row];
-    
-    cell.textLabel.text = item.name;
-    cell.detailTextLabel.text = item.phoneNumber;
-    
-    
+    cell.textLabel.text = self.directions[indexPath.row];
+    cell.textLabel.numberOfLines = 0;
     return cell;
 }
 
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    [self.tableView deselectRowAtIndexPath:indexPath animated:YES];
+}
+
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    return 66;
+}
 
 /*
 // Override to support conditional editing of the table view.
@@ -91,18 +96,17 @@
 }
 */
 
-
+/*
 #pragma mark - Navigation
 
 // In a storyboard-based application, you will often want to do a little preparation before navigation
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
     // Get the new view controller using [segue destinationViewController].
     // Pass the selected object to the new view controller.
-    RouteViewController *routeVC = [segue destinationViewController];
-    
-    routeVC.destination = self.mapItems[[self.tableView indexPathForSelectedRow].row];
-    routeVC.startingRegion = self.startingRegion;
 }
+*/
 
-
+- (IBAction)doneTapped:(id)sender {
+    [self dismissViewControllerAnimated:YES completion:nil];
+}
 @end

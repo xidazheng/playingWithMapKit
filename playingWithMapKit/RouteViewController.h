@@ -12,5 +12,5 @@
 @interface RouteViewController : UIViewController <MKMapViewDelegate>
 @property (strong, nonatomic) MKMapItem *destination;
 @property (weak, nonatomic) IBOutlet MKMapView *routeMap;
-
+@property (nonatomic) MKCoordinateRegion startingRegion;
 @end

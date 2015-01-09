@@ -12,4 +12,5 @@
 
 @interface ResultsTableViewController : UITableViewController
 @property (strong, nonatomic) NSArray *mapItems;
+@property (nonatomic) MKCoordinateRegion startingRegion;
 @end

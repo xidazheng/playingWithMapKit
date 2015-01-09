@@ -7,8 +7,10 @@
 //
 
 #import "RouteViewController.h"
+#import "DirectionsTableViewController.h"
 
 @interface RouteViewController ()
+@property (strong, nonatomic) NSMutableArray *directions;
 
 @end
 
@@ -19,15 +21,11 @@
     // Do any additional setup after loading the view.
     NSLog(@"RouteViewDidLoad");
     
+    self.directions = [[NSMutableArray alloc]init];
     self.routeMap.delegate = self;
     self.routeMap.showsUserLocation = YES;
     
-    MKUserLocation *userLocation = self.routeMap.userLocation;
-    
-    
-    MKCoordinateRegion region = MKCoordinateRegionMakeWithDistance(userLocation.location.coordinate, 1000, 1000);
-    
-    [self.routeMap setRegion:region animated:NO];
+    [self.routeMap setRegion:self.startingRegion animated:NO];
     
     [self getDirections];
     
@@ -39,6 +37,8 @@
     request.source = [MKMapItem mapItemForCurrentLocation];
     request.destination = self.destination;
     request.requestsAlternateRoutes = NO;
+    request.transportType = MKDirectionsTransportTypeWalking;
+    
     MKDirections *directions = [[MKDirections alloc] initWithRequest:request];
     
     [directions calculateDirectionsWithCompletionHandler:^(MKDirectionsResponse *response, NSError *error) {
@@ -47,9 +47,7 @@
         } else{
             [self showRoute:response];
         }
-        
     }];
-    
 }
 
 
@@ -58,8 +56,9 @@
     for (MKRoute *route in response.routes) {
         [self.routeMap addOverlay:route.polyline level:MKOverlayLevelAboveRoads];
         
+        [self.directions removeAllObjects];
         for (MKRouteStep *step in route.steps) {
-            NSLog(@"%@", step.instructions);
+            [self.directions addObject:[NSString stringWithFormat:@"%@ for %0.f meters.", step.instructions, step.distance ]];
         }
     }
 }
@@ -74,9 +73,8 @@
 
 - (void)mapView:(MKMapView *)mapView didUpdateUserLocation:(MKUserLocation *)userLocation
 {
-    NSLog(@"mapView didUpdateUserLocation %@", userLocation.location);
-//    self.routeMap.centerCoordinate = userLocation.location.coordinate;
-    [self.routeMap setRegion:MKCoordinateRegionMakeWithDistance(userLocation.location.coordinate, 1000, 1000) animated:NO];
+//    NSLog(@"mapView didUpdateUserLocation %@", userLocation.location);
+//    [self.routeMap setRegion:MKCoordinateRegionMakeWithDistance(userLocation.location.coordinate, 1000, 1000) animated:NO];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -85,14 +83,16 @@
 }
 
 
-/*
+
 #pragma mark - Navigation
 
 // In a storyboard-based application, you will often want to do a little preparation before navigation
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
+    UINavigationController *navigationVC = [segue destinationViewController];
+    DirectionsTableViewController *directionsTVC = (DirectionsTableViewController *)navigationVC.topViewController;
+    directionsTVC.directions = self.directions;
+    
 }
-*/
+
 
 @end

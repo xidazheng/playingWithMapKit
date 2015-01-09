@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		EA09E8C91A606F8C00CD0523 /* DirectionsTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EA09E8C81A606F8C00CD0523 /* DirectionsTableViewController.m */; };
 		EA77F6CB1A5F4DA900D28035 /* MultilineAnnotationView.m in Sources */ = {isa = PBXBuildFile; fileRef = EA77F6CA1A5F4DA900D28035 /* MultilineAnnotationView.m */; };
 		EAB97B811A5747BD00CA13ED /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = EAB97B801A5747BD00CA13ED /* main.m */; };
 		EAB97B841A5747BD00CA13ED /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = EAB97B831A5747BD00CA13ED /* AppDelegate.m */; };
@@ -32,6 +33,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		EA09E8C71A606F8C00CD0523 /* DirectionsTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DirectionsTableViewController.h; sourceTree = "<group>"; };
+		EA09E8C81A606F8C00CD0523 /* DirectionsTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DirectionsTableViewController.m; sourceTree = "<group>"; };
 		EA77F6C91A5F4DA900D28035 /* MultilineAnnotationView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MultilineAnnotationView.h; sourceTree = "<group>"; };
 		EA77F6CA1A5F4DA900D28035 /* MultilineAnnotationView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MultilineAnnotationView.m; sourceTree = "<group>"; };
 		EAB97B7B1A5747BD00CA13ED /* playingWithMapKit.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = playingWithMapKit.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -107,6 +110,8 @@
 				EAD985761A5AE4A000FE0011 /* ResultsTableViewController.m */,
 				EAD9857B1A5AE4DE00FE0011 /* RouteViewController.h */,
 				EAD9857C1A5AE4DE00FE0011 /* RouteViewController.m */,
+				EA09E8C71A606F8C00CD0523 /* DirectionsTableViewController.h */,
+				EA09E8C81A606F8C00CD0523 /* DirectionsTableViewController.m */,
 				EAB97B881A5747BD00CA13ED /* Main.storyboard */,
 				EAB97B8B1A5747BD00CA13ED /* Images.xcassets */,
 				EAB97B8D1A5747BD00CA13ED /* LaunchScreen.xib */,
@@ -245,6 +250,7 @@
 				EAD985771A5AE4A000FE0011 /* ResultsTableViewController.m in Sources */,
 				EAB97B871A5747BD00CA13ED /* MapViewController.m in Sources */,
 				EAD9857D1A5AE4DE00FE0011 /* RouteViewController.m in Sources */,
+				EA09E8C91A606F8C00CD0523 /* DirectionsTableViewController.m in Sources */,
 				EAB97B841A5747BD00CA13ED /* AppDelegate.m in Sources */,
 				EAB97B811A5747BD00CA13ED /* main.m in Sources */,
 				EA77F6CB1A5F4DA900D28035 /* MultilineAnnotationView.m in Sources */,

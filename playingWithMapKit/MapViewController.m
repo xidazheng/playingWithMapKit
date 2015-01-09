@@ -53,19 +53,10 @@
         }
     }
     
-
-    
     self.mapView.delegate = self;
     
 }
 
-- (void) viewDidAppear:(BOOL)animated
-{
-    [super viewDidAppear:animated];
-    
-    NSLog(@"viewdidapppear");
-    
-}
 
 //need a handler for status messages because it comes up in two places
 
@@ -80,31 +71,25 @@
     if (status == kCLAuthorizationStatusAuthorizedAlways || status == kCLAuthorizationStatusAuthorizedWhenInUse) {
         
         if ([CLLocationManager locationServicesEnabled]) {
+            [self.locationManager startUpdatingLocation];
             self.mapView.showsUserLocation = YES;
         }
     }
 
 }
 
-- (void)locationManager:(CLLocationManager *)manager didUpdateLocations:(NSArray *)locations
-{
-//    NSLog(@"locationManager didUpdateLocations %@", locations[0]);
-}
-
 - (void)mapView:(MKMapView *)mapView didUpdateUserLocation:(MKUserLocation *)userLocation
 {
-//    NSLog(@"mapView didUpdateUserLocation %@", userLocation.location);
-    self.mapView.centerCoordinate = userLocation.location.coordinate;
+//    self.mapView.centerCoordinate = userLocation.location.coordinate;
 }
 
 - (IBAction)zoomIn:(id)sender {
     MKUserLocation *userLocation = self.mapView.userLocation;
     MKCoordinateRegion region = MKCoordinateRegionMakeWithDistance(userLocation.location.coordinate, 1000, 1000);
-    [self.mapView setRegion:region animated:NO];
+    [self.mapView setRegion:region animated:YES];
     
-
-    NSLog(@"%f %f %f %f", region.center.latitude, region.center.longitude, region.span.latitudeDelta, region.span.longitudeDelta);
-    NSLog(@"%f %f %f %f", self.mapView.region.center.latitude, self.mapView.region.center.longitude, self.mapView.region.span.latitudeDelta, self.mapView.region.span.longitudeDelta);
+//    NSLog(@"%f %f %f %f", region.center.latitude, region.center.longitude, region.span.latitudeDelta, region.span.longitudeDelta);
+//    NSLog(@"%f %f %f %f", self.mapView.region.center.latitude, self.mapView.region.center.longitude, self.mapView.region.span.latitudeDelta, self.mapView.region.span.longitudeDelta);
 }
 
 - (IBAction)changeMapType:(id)sender {
@@ -137,10 +122,8 @@
         } else {
             pin.annotation = annotation;
         }
-//        pin.pinColor = MKPinAnnotationColorRed;
+        pin.pinColor = MKPinAnnotationColorGreen;
         pin.canShowCallout = NO;
-//        MKPinAnnotationView *newPin = [[MKPinAnnotationView alloc] initWithAnnotation:annotation reuseIdentifier:@"currentLocation"];
-//        pin.image = newPin.image;
         
         CLGeocoder *geocoder = [[CLGeocoder alloc] init];
 
@@ -149,7 +132,7 @@
                 CLPlacemark *placemark = placemarks[0]; //Only returns one
                 NSArray *formattedAddressLines = placemark.addressDictionary[@"FormattedAddressLines"];
                 NSString *street = formattedAddressLines[0];
-                NSString *cityState = [formattedAddressLines[1] substringToIndex:[formattedAddressLines[1] length]];
+                NSString *cityState = [formattedAddressLines[1] substringToIndex:[formattedAddressLines[1] length]-5];
                 NSString *country = formattedAddressLines[2];
                 
                 [(MKUserLocation *)annotation setTitle:[NSString stringWithFormat:@" %@ \n %@\n %@", street, cityState, country]];
@@ -162,6 +145,15 @@
     return nil;
 }
 
+- (void)mapView:(MKMapView *)mapView didSelectAnnotationView:(MKAnnotationView *)view
+{
+    NSLog(@"didSelectAnnotationView %@", view);
+    if ([view isKindOfClass:[MultilineAnnotationView class]]) {
+        [self zoomIn:nil];
+    }
+    
+}
+
 - (void) performSearch {
     MKLocalSearchRequest *request = [[MKLocalSearchRequest alloc] init];
     request.naturalLanguageQuery = self.searchText.text;
@@ -172,25 +164,29 @@
     MKLocalSearch *search = [[MKLocalSearch alloc] initWithRequest:request];
     
     [search startWithCompletionHandler:^(MKLocalSearchResponse *response, NSError *error) {
-        MKPointAnnotation *lastAnnotation;
+        __block MKPointAnnotation *firstAnnotation;
         
         if (response.mapItems.count == 0) {
             NSLog(@"No Matches");
         }else
         {
-            for (MKMapItem *item in response.mapItems)
-            {
+            
+            [response.mapItems enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
+                MKMapItem *item = obj;
                 [self.matchingItems addObject:item];
                 MKPointAnnotation *annotation = [[MKPointAnnotation alloc] init];
                 annotation.coordinate = item.placemark.coordinate;
                 annotation.title = item.name;
                 [self.mapView addAnnotation:annotation];
                 
-                lastAnnotation = annotation;
-            }
+                if (idx == 0) {
+                    firstAnnotation = annotation;
+                }
+            }];
+            
         }
         
-        [self.mapView selectAnnotation:lastAnnotation animated:YES];
+        [self.mapView selectAnnotation:firstAnnotation animated:YES];
     }];
     
 }
@@ -199,6 +195,12 @@
 {
     ResultsTableViewController *destination = [segue destinationViewController];
     destination.mapItems = self.matchingItems;
+    destination.startingRegion = self.mapView.region;
+}
+
+- (void) touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event
+{
+    [self.searchText resignFirstResponder];
 }
 
 @end

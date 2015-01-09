@@ -19,3 +19,17 @@ Given that the map shows my location
 When I tap on the blue dot
 Then an annotation should show my current address
 
+5. Making it look pretty
+
+To do list
+Remove the jumpy effect on loading- don't center location automatically
+Move bar buttons from toolbar to buttons on the map- default maps uses a toolbar, just move them apart
+Make the callout for the first search result come up- used a block and had to use __block storage
+Make the zip code and city on the same line- done with resizing the window
+Make the map center and zoom when the current location is tapped- called zoomIn
+After clicking the textbox, resign the first responder when the map is clicked- touches begins resign first responder
+Add Directions- done
+Zoom to include the destination in the Routeviewcontroller
+Intelligently choose walking vs driving directions-
+Do it with walking and if it’s more than 15 minutes, use driving
+Make the starting region of the route, the same as that of the previous view- done
