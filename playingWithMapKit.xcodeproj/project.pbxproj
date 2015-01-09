@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		EA77F6CB1A5F4DA900D28035 /* MultilineAnnotationView.m in Sources */ = {isa = PBXBuildFile; fileRef = EA77F6CA1A5F4DA900D28035 /* MultilineAnnotationView.m */; };
 		EAB97B811A5747BD00CA13ED /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = EAB97B801A5747BD00CA13ED /* main.m */; };
 		EAB97B841A5747BD00CA13ED /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = EAB97B831A5747BD00CA13ED /* AppDelegate.m */; };
 		EAB97B871A5747BD00CA13ED /* MapViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EAB97B861A5747BD00CA13ED /* MapViewController.m */; };
@@ -31,6 +32,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		EA77F6C91A5F4DA900D28035 /* MultilineAnnotationView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MultilineAnnotationView.h; sourceTree = "<group>"; };
+		EA77F6CA1A5F4DA900D28035 /* MultilineAnnotationView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MultilineAnnotationView.m; sourceTree = "<group>"; };
 		EAB97B7B1A5747BD00CA13ED /* playingWithMapKit.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = playingWithMapKit.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		EAB97B7F1A5747BD00CA13ED /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		EAB97B801A5747BD00CA13ED /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
@@ -98,6 +101,8 @@
 				EAB97BA41A57493000CA13ED /* ReadMe */,
 				EAB97B851A5747BD00CA13ED /* MapViewController.h */,
 				EAB97B861A5747BD00CA13ED /* MapViewController.m */,
+				EA77F6C91A5F4DA900D28035 /* MultilineAnnotationView.h */,
+				EA77F6CA1A5F4DA900D28035 /* MultilineAnnotationView.m */,
 				EAD985751A5AE4A000FE0011 /* ResultsTableViewController.h */,
 				EAD985761A5AE4A000FE0011 /* ResultsTableViewController.m */,
 				EAD9857B1A5AE4DE00FE0011 /* RouteViewController.h */,
@@ -242,6 +247,7 @@
 				EAD9857D1A5AE4DE00FE0011 /* RouteViewController.m in Sources */,
 				EAB97B841A5747BD00CA13ED /* AppDelegate.m in Sources */,
 				EAB97B811A5747BD00CA13ED /* main.m in Sources */,
+				EA77F6CB1A5F4DA900D28035 /* MultilineAnnotationView.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

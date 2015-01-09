@@ -8,6 +8,7 @@
 
 #import "MapViewController.h"
 #import "ResultsTableViewController.h"
+#import "MultilineAnnotationView.h"
 
 @interface MapViewController ()
 @property (strong, nonatomic) CLLocationManager *locationManager;
@@ -129,21 +130,33 @@
 {
     NSLog(@"viewForAnnotation %@", annotation);
     
-    
     if ([annotation isKindOfClass:[MKUserLocation class]]) {
-        CLGeocoder *geocoder = [[CLGeocoder alloc] init];
+        MultilineAnnotationView *pin = (MultilineAnnotationView *) [self.mapView dequeueReusableAnnotationViewWithIdentifier: @"currentLocation"];
+        if (pin == nil) {
+            pin = [[MultilineAnnotationView alloc] initWithAnnotation:annotation reuseIdentifier: @"currentLocation"];
+        } else {
+            pin.annotation = annotation;
+        }
+//        pin.pinColor = MKPinAnnotationColorRed;
+        pin.canShowCallout = NO;
+//        MKPinAnnotationView *newPin = [[MKPinAnnotationView alloc] initWithAnnotation:annotation reuseIdentifier:@"currentLocation"];
+//        pin.image = newPin.image;
         
+        CLGeocoder *geocoder = [[CLGeocoder alloc] init];
+
         [geocoder reverseGeocodeLocation:((MKUserLocation *) annotation).location completionHandler:^(NSArray *placemarks, NSError *error) {
             if ([placemarks count]>0) {
                 CLPlacemark *placemark = placemarks[0]; //Only returns one
                 NSArray *formattedAddressLines = placemark.addressDictionary[@"FormattedAddressLines"];
                 NSString *street = formattedAddressLines[0];
-                NSString *cityState = [formattedAddressLines[1] substringToIndex:[formattedAddressLines[1] length] - 11];
+                NSString *cityState = [formattedAddressLines[1] substringToIndex:[formattedAddressLines[1] length]];
+                NSString *country = formattedAddressLines[2];
                 
-                [(MKUserLocation *) annotation setTitle:[NSString stringWithFormat:@"%@ %@", street, cityState]];
+                [(MKUserLocation *)annotation setTitle:[NSString stringWithFormat:@" %@ \n %@\n %@", street, cityState, country]];
             }
         }];
         
+        return pin;
     }
     
     return nil;
