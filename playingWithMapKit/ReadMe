@@ -29,7 +29,7 @@ Make the zip code and city on the same line- done with resizing the window
 Make the map center and zoom when the current location is tapped- called zoomIn
 After clicking the textbox, resign the first responder when the map is clicked- touches begins resign first responder
 Add Directions- done
-Zoom to include the destination in the Routeviewcontroller
+Zoom to include the destination in the Routeviewcontroller- done
 Intelligently choose walking vs driving directions-
-Do it with walking and if it’s more than 15 minutes, use driving
+Do it with walking and if it’s more than 15 minutes, use driving- done
 Make the starting region of the route, the same as that of the previous view- done

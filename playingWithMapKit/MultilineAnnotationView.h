@@ -10,5 +10,4 @@
 @class CustomAnnotationCalloutView;
 
 @interface MultilineAnnotationView : MKPinAnnotationView
-//@property (strong, nonatomic) CustomAnnotationCalloutView *customCalloutView;
 @end

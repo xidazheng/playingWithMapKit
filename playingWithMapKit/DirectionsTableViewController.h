@@ -10,4 +10,5 @@
 
 @interface DirectionsTableViewController : UITableViewController
 @property (strong, nonatomic) NSArray *directions;
+@property (strong, nonatomic) NSString *title;
 @end

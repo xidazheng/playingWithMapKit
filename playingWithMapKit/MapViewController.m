@@ -26,6 +26,11 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view, typically from a nib.
+    self.navigationItem.title = @"LunchTime";
+    self.searchText.placeholder = @"What are you feel?";
+    [self.navigationItem.rightBarButtonItem setTitle:@""];
+    [self.navigationItem.rightBarButtonItem setEnabled:NO];
+    self.navigationItem.backBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"" style:UIBarButtonItemStylePlain target:nil action:nil];
     
     CLAuthorizationStatus status = [CLLocationManager authorizationStatus];
     NSLog(@"%d", status);
@@ -170,7 +175,6 @@
             NSLog(@"No Matches");
         }else
         {
-            
             [response.mapItems enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
                 MKMapItem *item = obj;
                 [self.matchingItems addObject:item];
@@ -184,6 +188,8 @@
                 }
             }];
             
+            [self.navigationItem.rightBarButtonItem setTitle:@"Results"];
+            [self.navigationItem.rightBarButtonItem setEnabled:YES];
         }
         
         [self.mapView selectAnnotation:firstAnnotation animated:YES];

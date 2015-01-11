@@ -13,6 +13,7 @@
 @property (strong, nonatomic) NSMutableArray *directions;
 @property (nonatomic) MKCoordinateRegion adjustedRegion;
 @property (nonatomic) BOOL destinationVisible;
+@property (strong, nonatomic) NSString *transportType;
 
 @end
 
@@ -23,6 +24,8 @@
     // Do any additional setup after loading the view.
     NSLog(@"RouteViewDidLoad");
     
+    self.title = @"Directions";
+    
     self.directions = [[NSMutableArray alloc]init];
     self.routeMap.delegate = self;
     self.routeMap.showsUserLocation = YES;
@@ -30,7 +33,6 @@
     [self.routeMap setRegion:self.startingRegion animated:YES];
     
     [self getDirections];
-    
 }
 
 - (void)resizeRegionWithDestination:(MKMapItem *)destination userLocation:(MKUserLocation *)userLocation
@@ -60,7 +62,6 @@
     
     self.adjustedRegion = [self.routeMap regionThatFits:region];
     [self.routeMap setRegion:self.adjustedRegion animated:YES];
-    
 }
 
 - (void)getDirections{
@@ -69,18 +70,37 @@
     request.source = [MKMapItem mapItemForCurrentLocation];
     request.destination = self.destination;
     request.requestsAlternateRoutes = NO;
-    request.transportType = MKDirectionsTransportTypeAny;
+    request.transportType = MKDirectionsTransportTypeWalking;
     
-    MKDirections *directions = [[MKDirections alloc] initWithRequest:request];
+    MKDirections *estimatedTimeOfArrival = [[MKDirections alloc] initWithRequest:request];
     
-    [directions calculateDirectionsWithCompletionHandler:^(MKDirectionsResponse *response, NSError *error) {
+    [estimatedTimeOfArrival calculateETAWithCompletionHandler:^(MKETAResponse *response, NSError *error) {
         if (error) {
-            NSLog(@"error %@", error.localizedDescription);
-        } else{
-            [self showRoute:response];
-            if (!self.destinationVisible && !(self.adjustedRegion.center.latitude == 0)) {
-                [self.routeMap setRegion:self.adjustedRegion animated:YES];
+            NSLog(@"eta error %@", error.localizedDescription);
+        } else {
+            NSTimeInterval maximumWalkingTime = 15*60;
+            if (response.expectedTravelTime > maximumWalkingTime) {
+                request.transportType = MKDirectionsTransportTypeAny;
+                self.transportType = @"Driving";
+            }else {
+                request.transportType = MKDirectionsTransportTypeWalking;
+                self.transportType = @"Walking";
             }
+            
+            self.navigationItem.title = [NSString stringWithFormat:@"%@ Directions", self.transportType];
+            
+            MKDirections *directions = [[MKDirections alloc] initWithRequest:request];
+            
+            [directions calculateDirectionsWithCompletionHandler:^(MKDirectionsResponse *response, NSError *error) {
+                if (error) {
+                    NSLog(@"directions error %@", error.localizedDescription);
+                } else{
+                    [self showRoute:response];
+                    if (!self.destinationVisible && !(self.adjustedRegion.center.latitude == 0)) {
+                        [self.routeMap setRegion:self.adjustedRegion animated:YES];
+                    }
+                }
+            }];
         }
     }];
 }
@@ -117,7 +137,6 @@
     if (!self.destinationVisible) {
         [self resizeRegionWithDestination:self.destination userLocation:userLocation];
     }
-    
 }
 
 - (void)didReceiveMemoryWarning {
@@ -134,6 +153,7 @@
     UINavigationController *navigationVC = [segue destinationViewController];
     DirectionsTableViewController *directionsTVC = (DirectionsTableViewController *)navigationVC.topViewController;
     directionsTVC.directions = self.directions;
+    directionsTVC.title = [NSString stringWithFormat:@"%@ Directions", self.transportType];
 }
 
 

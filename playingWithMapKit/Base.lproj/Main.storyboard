@@ -36,7 +36,7 @@
                             <mapView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" mapType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="ozj-FZ-Nfv">
                                 <rect key="frame" x="0.0" y="110" width="600" height="446"/>
                             </mapView>
-                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Local Search" minimumFontSize="17" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="hsu-Lx-j8i">
+                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" minimumFontSize="17" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="hsu-Lx-j8i">
                                 <rect key="frame" x="16" y="72" width="568" height="30"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits" returnKeyType="search"/>
@@ -118,7 +118,7 @@
             </objects>
             <point key="canvasLocation" x="1785" y="345"/>
         </scene>
-        <!--Walking Route-->
+        <!--Route View Controller-->
         <scene sceneID="8DP-Mv-DDz">
             <objects>
                 <viewController id="QM1-5t-YIJ" customClass="RouteViewController" sceneMemberID="viewController">
@@ -142,7 +142,7 @@
                             <constraint firstAttribute="trailing" secondItem="gMf-MD-OFE" secondAttribute="trailing" id="t9t-Jy-aPu"/>
                         </constraints>
                     </view>
-                    <navigationItem key="navigationItem" title="Walking Route" id="ogX-Nw-ebj">
+                    <navigationItem key="navigationItem" id="ogX-Nw-ebj">
                         <barButtonItem key="rightBarButtonItem" title="Directions" id="GeP-vl-fKI">
                             <connections>
                                 <segue destination="huE-S7-jKg" kind="presentation" id="48D-Xc-tx2"/>
@@ -157,7 +157,7 @@
             </objects>
             <point key="canvasLocation" x="2513" y="345"/>
         </scene>
-        <!--Walking Directions-->
+        <!--Directions Table View Controller-->
         <scene sceneID="RQw-oy-KPM">
             <objects>
                 <tableViewController id="3JP-ka-nu9" customClass="DirectionsTableViewController" sceneMemberID="viewController">
@@ -178,7 +178,7 @@
                             <outlet property="delegate" destination="3JP-ka-nu9" id="QkA-eK-Egg"/>
                         </connections>
                     </tableView>
-                    <navigationItem key="navigationItem" title="Walking Directions" id="RQM-As-re5">
+                    <navigationItem key="navigationItem" id="RQM-As-re5">
                         <barButtonItem key="rightBarButtonItem" systemItem="done" id="4Vl-jc-lCm">
                             <connections>
                                 <action selector="doneTapped:" destination="3JP-ka-nu9" id="uA5-qe-Tgz"/>
