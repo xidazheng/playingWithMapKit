@@ -27,7 +27,7 @@
     self.routeMap.delegate = self;
     self.routeMap.showsUserLocation = YES;
     
-    [self.routeMap setRegion:self.startingRegion animated:NO];
+    [self.routeMap setRegion:self.startingRegion animated:YES];
     
     [self getDirections];
     
@@ -78,9 +78,9 @@
             NSLog(@"error %@", error.localizedDescription);
         } else{
             [self showRoute:response];
-//            if (!self.destinationVisible && !(self.adjustedRegion.center.latitude == 0)) {
-//                [self.routeMap setRegion:self.adjustedRegion animated:YES];
-//            }
+            if (!self.destinationVisible && !(self.adjustedRegion.center.latitude == 0)) {
+                [self.routeMap setRegion:self.adjustedRegion animated:YES];
+            }
         }
     }];
 }
@@ -109,7 +109,6 @@
 - (void)mapView:(MKMapView *)mapView didUpdateUserLocation:(MKUserLocation *)userLocation
 {
     NSLog(@"mapView didUpdateUserLocation %@", userLocation.location);
-    [self.routeMap setRegion:self.startingRegion animated:NO];
   
     MKMapPoint destionationPoint = MKMapPointForCoordinate(self.destination.placemark.location.coordinate);
     MKMapRect mapRect = self.routeMap.visibleMapRect;
@@ -135,7 +134,6 @@
     UINavigationController *navigationVC = [segue destinationViewController];
     DirectionsTableViewController *directionsTVC = (DirectionsTableViewController *)navigationVC.topViewController;
     directionsTVC.directions = self.directions;
-    
 }
 
 
