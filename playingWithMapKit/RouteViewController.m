@@ -11,6 +11,8 @@
 
 @interface RouteViewController ()
 @property (strong, nonatomic) NSMutableArray *directions;
+@property (nonatomic) MKCoordinateRegion adjustedRegion;
+@property (nonatomic) BOOL destinationVisible;
 
 @end
 
@@ -31,13 +33,43 @@
     
 }
 
+- (void)resizeRegionWithDestination:(MKMapItem *)destination userLocation:(MKUserLocation *)userLocation
+{
+    NSLog(@"need to resize");
+    CLLocationCoordinate2D destinationCoordinate = destination.placemark.location.coordinate;
+    CLLocationCoordinate2D userCoordinate = userLocation.location.coordinate;
+    
+    double scaleFactor = 2;
+    CLLocationDegrees latitudeDelta = (userCoordinate.latitude - destinationCoordinate.latitude)*scaleFactor;
+    CLLocationDegrees longitudeDelta = (userCoordinate.longitude - destinationCoordinate.longitude)*scaleFactor;
+    
+    if (latitudeDelta < 0) {
+        latitudeDelta = latitudeDelta * -1;
+    }
+    if (longitudeDelta < 0) {
+        longitudeDelta = longitudeDelta * -1;
+    }
+    
+    MKCoordinateSpan span = MKCoordinateSpanMake(latitudeDelta, longitudeDelta);
+
+    CLLocationDegrees averageLatitude = (userCoordinate.latitude + destinationCoordinate.latitude)/2;
+    CLLocationDegrees averageLongitude = (userCoordinate.longitude + destinationCoordinate.longitude)/2;
+    CLLocationCoordinate2D centerCoordinate = CLLocationCoordinate2DMake(averageLatitude, averageLongitude);
+
+    MKCoordinateRegion region = MKCoordinateRegionMake(centerCoordinate, span);
+    
+    self.adjustedRegion = [self.routeMap regionThatFits:region];
+    [self.routeMap setRegion:self.adjustedRegion animated:YES];
+    
+}
+
 - (void)getDirections{
     MKDirectionsRequest *request = [[MKDirectionsRequest alloc] init];
     
     request.source = [MKMapItem mapItemForCurrentLocation];
     request.destination = self.destination;
     request.requestsAlternateRoutes = NO;
-    request.transportType = MKDirectionsTransportTypeWalking;
+    request.transportType = MKDirectionsTransportTypeAny;
     
     MKDirections *directions = [[MKDirections alloc] initWithRequest:request];
     
@@ -46,6 +78,9 @@
             NSLog(@"error %@", error.localizedDescription);
         } else{
             [self showRoute:response];
+//            if (!self.destinationVisible && !(self.adjustedRegion.center.latitude == 0)) {
+//                [self.routeMap setRegion:self.adjustedRegion animated:YES];
+//            }
         }
     }];
 }
@@ -73,8 +108,17 @@
 
 - (void)mapView:(MKMapView *)mapView didUpdateUserLocation:(MKUserLocation *)userLocation
 {
-//    NSLog(@"mapView didUpdateUserLocation %@", userLocation.location);
-//    [self.routeMap setRegion:MKCoordinateRegionMakeWithDistance(userLocation.location.coordinate, 1000, 1000) animated:NO];
+    NSLog(@"mapView didUpdateUserLocation %@", userLocation.location);
+    [self.routeMap setRegion:self.startingRegion animated:NO];
+  
+    MKMapPoint destionationPoint = MKMapPointForCoordinate(self.destination.placemark.location.coordinate);
+    MKMapRect mapRect = self.routeMap.visibleMapRect;
+    self.destinationVisible = MKMapRectContainsPoint(mapRect, destionationPoint);
+
+    if (!self.destinationVisible) {
+        [self resizeRegionWithDestination:self.destination userLocation:userLocation];
+    }
+    
 }
 
 - (void)didReceiveMemoryWarning {
