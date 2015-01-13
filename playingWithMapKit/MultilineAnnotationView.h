@@ -10,4 +10,5 @@
 @class CustomAnnotationCalloutView;
 
 @interface MultilineAnnotationView : MKPinAnnotationView
+@property (strong, nonatomic) UILabel *label;
 @end

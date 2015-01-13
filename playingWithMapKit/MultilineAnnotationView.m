@@ -27,17 +27,17 @@
     
     if (selected)
     {
-        UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 200, 80)];
-        label.backgroundColor = [UIColor whiteColor];
-        label.layer.cornerRadius = 10;
-        label.clipsToBounds = YES;
-        label.numberOfLines = 0;
-        label.text = [NSString stringWithFormat:@"%@",((MKUserLocation *)self.annotation).title];
-        label.textAlignment = NSTextAlignmentCenter;
+        self.label = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 200, 80)];
+        self.label.backgroundColor = [UIColor whiteColor];
+        self.label.layer.cornerRadius = 10;
+        self.label.clipsToBounds = YES;
+        self.label.numberOfLines = 0;
+        self.label.text = [NSString stringWithFormat:@"%@",((MKUserLocation *)self.annotation).title];
+        self.label.textAlignment = NSTextAlignmentCenter;
         
-        UIView *rightView = [[UIView alloc] initWithFrame:CGRectMake(-label.frame.size.width/2+ self.image.size.width/4, -label.frame.size.height - 10, label.frame.size.width, label.frame.size.height)];
+        UIView *rightView = [[UIView alloc] initWithFrame:CGRectMake(-self.label.frame.size.width/2+ self.image.size.width/4, -self.label.frame.size.height - 10, self.label.frame.size.width, self.label.frame.size.height)];
         
-        [rightView addSubview:label];
+        [rightView addSubview:self.label];
         [self addSubview:rightView];
         
     }

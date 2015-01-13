@@ -15,6 +15,7 @@
 @property (weak, nonatomic) IBOutlet MKMapView *mapView;
 @property (weak, nonatomic) IBOutlet UITextField *searchText;
 @property (strong, nonatomic) NSMutableArray *matchingItems;
+@property (strong, nonatomic) MultilineAnnotationView *userLocationPin;
 - (IBAction)zoomIn:(id)sender;
 - (IBAction)changeMapType:(id)sender;
 - (IBAction)textFieldReturn:(id)sender;
@@ -85,7 +86,9 @@
 
 - (void)mapView:(MKMapView *)mapView didUpdateUserLocation:(MKUserLocation *)userLocation
 {
-//    self.mapView.centerCoordinate = userLocation.location.coordinate;
+    if ([self.userLocationPin.label.text isEqualToString:@"Current Location"]) {
+        [self mapView:self.mapView viewForAnnotation:userLocation];
+    }
 }
 
 - (IBAction)zoomIn:(id)sender {
@@ -121,17 +124,17 @@
     NSLog(@"viewForAnnotation %@", annotation);
     
     if ([annotation isKindOfClass:[MKUserLocation class]]) {
-        MultilineAnnotationView *pin = (MultilineAnnotationView *) [self.mapView dequeueReusableAnnotationViewWithIdentifier: @"currentLocation"];
-        if (pin == nil) {
-            pin = [[MultilineAnnotationView alloc] initWithAnnotation:annotation reuseIdentifier: @"currentLocation"];
+        self.userLocationPin = (MultilineAnnotationView *) [self.mapView dequeueReusableAnnotationViewWithIdentifier: @"currentLocation"];
+        if (self.userLocationPin == nil) {
+            self.userLocationPin = [[MultilineAnnotationView alloc] initWithAnnotation:annotation reuseIdentifier: @"currentLocation"];
         } else {
-            pin.annotation = annotation;
+            self.userLocationPin.annotation = annotation;
         }
-        pin.pinColor = MKPinAnnotationColorGreen;
-        pin.canShowCallout = NO;
+        self.userLocationPin.pinColor = MKPinAnnotationColorGreen;
+        self.userLocationPin.canShowCallout = NO;
         
         CLGeocoder *geocoder = [[CLGeocoder alloc] init];
-
+        
         [geocoder reverseGeocodeLocation:((MKUserLocation *) annotation).location completionHandler:^(NSArray *placemarks, NSError *error) {
             if ([placemarks count]>0) {
                 CLPlacemark *placemark = placemarks[0]; //Only returns one
@@ -144,7 +147,7 @@
             }
         }];
         
-        return pin;
+        return self.userLocationPin;
     }
     
     return nil;
