@@ -27,11 +27,12 @@
     
     if (selected)
     {
-        self.label = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 200, 80)];
+        self.label = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 220, 100)];
         self.label.backgroundColor = [UIColor whiteColor];
         self.label.layer.cornerRadius = 10;
         self.label.clipsToBounds = YES;
         self.label.numberOfLines = 0;
+        NSLog(@"Label Assigned Title %@", ((MKUserLocation *)self.annotation).title);
         self.label.text = [NSString stringWithFormat:@"%@",((MKUserLocation *)self.annotation).title];
         self.label.textAlignment = NSTextAlignmentCenter;
         

@@ -33,3 +33,8 @@ Zoom to include the destination in the Routeviewcontroller- done
 Intelligently choose walking vs driving directions-
 Do it with walking and if it’s more than 15 minutes, use driving- done
 Make the starting region of the route, the same as that of the previous view- done
+
+6. Squashing bugs
+"Current location" is shown instead of address if the pin is tapped before the address comes back.- done
+When the street name is too long, the country goes onto the fourth line.- done
+When I change from Wifi to 3G, the location changes and the label for the MultilineAnnocationView does not change- have to walk to test it
