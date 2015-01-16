@@ -129,14 +129,7 @@
 - (void)mapView:(MKMapView *)mapView didUpdateUserLocation:(MKUserLocation *)userLocation
 {
     NSLog(@"mapView didUpdateUserLocation %@", userLocation.location);
-  
-    MKMapPoint destionationPoint = MKMapPointForCoordinate(self.destination.placemark.location.coordinate);
-    MKMapRect mapRect = self.routeMap.visibleMapRect;
-    self.destinationVisible = MKMapRectContainsPoint(mapRect, destionationPoint);
-
-    if (!self.destinationVisible) {
-        [self resizeRegionWithDestination:self.destination userLocation:userLocation];
-    }
+    [self resizeRegionWithDestination:self.destination userLocation:userLocation];
 }
 
 - (void)didReceiveMemoryWarning {
