@@ -4,4 +4,4 @@ Then, I extended the app to find the address of the current location, made it lo
 
 The result can be seen in this [quick demo](https://vimeo.com/117020263). 
 
-The blog post is on it's way.
+The blog post is [here](http://xidazheng.com/2015/01/19/playing-with-mapkit-part-1-mapkit-tutorials/).

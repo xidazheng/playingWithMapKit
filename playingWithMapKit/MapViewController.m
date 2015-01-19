@@ -36,7 +36,7 @@
     self.navigationItem.backBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"" style:UIBarButtonItemStylePlain target:nil action:nil];
     
     CLAuthorizationStatus status = [CLLocationManager authorizationStatus];
-//    NSLog(@"%d", status);
+    NSLog(@"%d", status);
     
     if (status == kCLAuthorizationStatusRestricted || status == kCLAuthorizationStatusDenied) {
         UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"Permission to Access Location Not Received" message:@"Please Turn On Location Sharing in Settings" preferredStyle:UIAlertControllerStyleAlert];
@@ -56,7 +56,7 @@
             
             if ([CLLocationManager locationServicesEnabled]) {
                 NSLog(@"showsUserLocation reached");
-                self.mapView.showsUserLocation = YES;
+//                self.mapView.showsUserLocation = YES;
             }
         }
     }
