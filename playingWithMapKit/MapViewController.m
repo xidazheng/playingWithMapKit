@@ -18,6 +18,7 @@
 @property (strong, nonatomic) MultilineAnnotationView *userLocationPin;
 @property (strong, nonatomic) NSString *address;
 @property (strong, nonatomic) MKUserLocation *previousUserLocation;
+@property (nonatomic) BOOL firstLoad;
 - (IBAction)zoomIn:(id)sender;
 - (IBAction)changeMapType:(id)sender;
 - (IBAction)textFieldReturn:(id)sender;
@@ -29,6 +30,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view, typically from a nib.
+    self.firstLoad = YES;
     self.navigationItem.title = @"LunchTime";
     self.searchText.placeholder = @"What are you feel?";
     [self.navigationItem.rightBarButtonItem setTitle:@""];
@@ -52,17 +54,10 @@
         if (status == kCLAuthorizationStatusNotDetermined) {
             NSLog(@"requestWhenInUseAuthorization reached");
             [self.locationManager requestWhenInUseAuthorization];
-        } else if (status == kCLAuthorizationStatusAuthorizedAlways || status == kCLAuthorizationStatusAuthorizedWhenInUse) {
-            
-            if ([CLLocationManager locationServicesEnabled]) {
-                NSLog(@"showsUserLocation reached");
-//                self.mapView.showsUserLocation = YES;
-            }
         }
     }
     
     self.mapView.delegate = self;
-    
 }
 
 
@@ -88,7 +83,11 @@
 
 - (void)mapView:(MKMapView *)mapView didUpdateUserLocation:(MKUserLocation *)userLocation
 {
-    [self zoomIn:nil];
+    NSLog(@"updateUserLocation");
+    if (self.firstLoad) {
+        [self zoomIn:nil];
+        self.firstLoad = NO;
+    }
 
     if (self.previousUserLocation.location != nil && userLocation.location != self.previousUserLocation.location) {
         NSLog(@"called get Address");
